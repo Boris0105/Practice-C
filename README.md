@@ -3,7 +3,7 @@
 
 # Build
 
-gcc main.c config.c -o hwmon
+gcc -pthread main.c config.c config.h -o hwmon
 
 # Design notes
 
@@ -49,4 +49,3 @@ It doesn't match the entity in checkAndReturnFanzoneConfig1(), so it skips calli
 Then, it calls loadFanzoneConfig1() because DEFAULT_CONFIG is loadFanzoneConfig1().
 ```
 
-From results above, we can tell that 

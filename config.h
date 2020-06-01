@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <pthread.h>
 
 /******************************************************************
  *                            Marcos                              *
@@ -57,6 +59,7 @@ struct fanzone {
 struct config {
 	struct entity_combination entity;
 	struct fanzone fanzones[FAN_ZONE_NUM];
+	float powerCapping;
 	// [WIP] see get_system_power_capping_info in config.c
     //struct powerCappingInfo powerCapping_config;
 };
@@ -76,4 +79,5 @@ struct config *currentConfig;
 
 void get_system_fanzones();
 void get_system_entity();
-void get_system_power_capping_info();
+void *get_system_power_capping_info(void *vars);
+

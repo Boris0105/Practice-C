@@ -262,7 +262,13 @@ void get_system_entity()
 	memcpy(&(currentConfig->entity), &temp4Default, sizeof(struct entity_combination));
 }
 
-void get_system_power_capping_info()
+void *get_system_power_capping_info(void *vars)
 {
 	// [WIP] Leave this empty temporarily
+	static float pc = 1.0;
+	
+	while (pc < 500000) {
+		pc += 1.1;
+		currentConfig->powerCapping =  pc;
+	}
 }

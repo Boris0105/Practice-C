@@ -5,24 +5,6 @@ int loadFanzoneConfig0()
 	struct fanzone tempFanzones[FAN_ZONE_NUM] = {
 		{
 			{
-				{0,1,1,1,1,1,1,1},
-				{0.2,20,21,22,23,24,25,26},
-				{0.4,20,21,22,23,24,25,26},
-				{0.6,20,21,22,23,24,25,26},
-				{0.8,20,21,22,23,24,25,26},
-				{1,20,21,22,23,24,25,26}
-			},
-			{
-				{0,21,22,23,24,25,26,27},
-				{0.2,30,31,32,33,34,35,36},
-				{0.4,30,31,32,33,34,35,36},
-				{0.6,30,31,32,33,34,35,36},
-				{0.8,30,31,32,33,34,35,36},
-				{1,30,31,32,33,34,35,36}
-			}
-		},
-		{
-			{
 				{0,21,22,23,24,25,26,27},
 				{0.2,20,21,22,23,24,25,26},
 				{0.4,20,21,22,23,24,25,26},
@@ -59,7 +41,25 @@ int loadFanzoneConfig0()
 		},
 		{
 			{
-				{0,0,0,0,0,0,0,0},
+				{0,21,22,23,24,25,26,27},
+				{0.2,20,21,22,23,24,25,26},
+				{0.4,20,21,22,23,24,25,26},
+				{0.6,20,21,22,23,24,25,26},
+				{0.8,20,21,22,23,24,25,26},
+				{1,20,21,22,23,24,25,26}
+			},
+			{
+				{0,21,22,23,24,25,26,27},
+				{0.2,30,31,32,33,34,35,36},
+				{0.4,30,31,32,33,34,35,36},
+				{0.6,30,31,32,33,34,35,36},
+				{0.8,30,31,32,33,34,35,36},
+				{1,30,31,32,33,34,35,36}
+			}
+		},
+		{
+			{
+				{0,21,22,23,34,35,36,27},
 				{0.2,20,21,22,23,24,25,26},
 				{0.4,20,21,22,23,24,25,26},
 				{0.6,20,21,22,23,24,25,26},
@@ -84,6 +84,43 @@ int loadFanzoneConfig0()
     return 1;
 }
 
+
+
+
+int loadPowercapConfig0() 
+{
+	struct powercapping temp_system_power_cap={
+		
+		    {
+			{37,143,0,0,1},
+			{40,113,0,0,1},
+			{43,75,0,0,1},
+			{45,70,0,0,1},
+			{50,50,0,0,1}
+			},
+			{
+			{15,0,0,0,1},
+			{27,205,0,0,1},
+			{30,125,0,0,1},
+			{33,113,0,0,1},
+			{36,102,0,0,1},
+			{39,83,570,5,1},
+			{42,60,480,3,1}
+			},
+	};
+
+    memcpy((void *)&(currentConfig->system_powercapping_settings),
+           (void *)&temp_system_power_cap,
+           sizeof(struct powercapping));
+
+    return 1;
+
+
+
+}
+
+
+
 int checkAndReturnFanzoneConfig0()
 {
     struct entity_combination tempEntity = {
@@ -102,6 +139,7 @@ int checkAndReturnFanzoneConfig0()
         return 0;
 
     loadFanzoneConfig0();
+	loadPowercapConfig0();
     return 1;
 }
 
@@ -189,6 +227,43 @@ int loadFanzoneConfig1()
     return 1;
 }
 
+
+int loadPowercapConfig1() 
+{
+	struct powercapping temp_system_power_cap={
+		
+		    {
+			{37,143,0,0,1},
+			{40,113,0,0,1},
+			{43,75,0,0,1},
+			{45,70,0,0,1},
+			{50,50,0,0,1}
+			},
+			{
+			{15,0,0,0,1},
+			{27,205,0,0,1},
+			{30,125,0,0,1},
+			{33,113,0,0,1},
+			{36,102,0,0,1},
+			{39,83,570,5,1},
+			{42,60,480,3,1}
+			},
+	};
+
+
+    memcpy((void *)&(currentConfig->system_powercapping_settings),
+           (void *)&temp_system_power_cap,
+           sizeof(struct powercapping));
+
+    return 1;
+
+
+
+}
+
+
+
+
 int checkAndReturnFanzoneConfig1()
 {
     struct entity_combination tempEntity = {
@@ -207,7 +282,8 @@ int checkAndReturnFanzoneConfig1()
         return 0;
 
     loadFanzoneConfig1();
-    return 1;
+    loadPowercapConfig1();
+	return 1;
 }
 
 void get_system_fanzones()
@@ -230,7 +306,7 @@ void get_system_entity()
 {
 	// [WIP] entity shall be retrieved at system startup,
 	// use a temporary entity here. This shall be removed later.
-	struct entity_combination temp4Config0 = {
+    	struct entity_combination temp4Config0 = {
 		{ 0, 2 },
 		{ 5, 16 },
 		{ 6, 16 },
@@ -239,36 +315,33 @@ void get_system_entity()
 		{ 11, 4 },
 		{ 13, 1 }
     };
-    struct entity_combination temp4Config1 = {
-        { 0, 1 },
-        { 5, 10 },
-        { 6, 10 },
-        { 9, 10 },
-        {10, 10 },
-        {11, 3 },
-        {13, 1 }
-	};
-    struct entity_combination temp4Default = {
-        { 1, 2 },
-        { 3, 4 },
-        { 5, 6 },
-        { 7, 8 },
-        { 9, 10 },
-        { 11, 12 },
-        { 13, 14 },
-        { 15, 16 }
+    	struct entity_combination temp4Config1 = {
+        	{ 0, 1 },
+        	{ 5, 10 },
+        	{ 6, 10 },
+        	{ 9, 10 },
+        	{10, 10 },
+        	{11, 3 },
+        	{13, 1 }
+    };
+    	struct entity_combination temp4Default = {
+        	{ 1, 2 },
+        	{ 3, 4 },
+        	{ 5, 6 },
+        	{ 7, 8 },
+        	{ 9, 10 },
+        	{ 11, 12 },
+        	{ 13, 14 },
+        	{ 15, 16 }
     };
 
-	memcpy(&(currentConfig->entity), &temp4Default, sizeof(struct entity_combination));
+	memcpy(&(currentConfig->entity), &temp4Config1, sizeof(struct entity_combination));
 }
 
-void *get_system_power_capping_info(void *vars)
+
+/*
+void get_system_power_capping_info()
 {
 	// [WIP] Leave this empty temporarily
-	static float pc = 1.0;
-	
-	while (pc < 500000) {
-		pc += 1.1;
-		currentConfig->powerCapping =  pc;
-	}
 }
+*/

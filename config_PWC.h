@@ -54,17 +54,9 @@ struct fanzone {
 	float HP_fan_zone_settings[6][8];
 };
 
-
-struct powercapping{
-	int HighAmbcap[5][5];
-	int FanFailcap[7][5];
-
-};
-
 struct config {
 	struct entity_combination entity;
 	struct fanzone fanzones[FAN_ZONE_NUM];
-	struct powercapping system_powercapping_settings;
 	// [WIP] see get_system_power_capping_info in config.c
     //struct powerCappingInfo powerCapping_config;
 };

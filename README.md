@@ -3,7 +3,7 @@
 
 # Build
 
-gcc main.c config.c -o hwmon
+gcc main.c config.c hwmon.c -lpthread -o hwmon
 
 # Design notes
 

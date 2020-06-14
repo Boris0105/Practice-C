@@ -289,11 +289,13 @@ int checkAndReturnFanzoneConfig1()
 void get_system_fanzones()
 {
 	int i;
+	//=============================================================//
 	int (*checkEntityThenReturnConfig[CONFIG_NUM + 1])() = {
 		checkAndReturnFanzoneConfig0,
 		checkAndReturnFanzoneConfig1,
 		DEFAULT_CONFIG
 	};
+	//==============================================================//
 
 	for (i = 0; i < CONFIG_NUM + 1; i++) {
 		printf("%s: Checking entity#%d...\n", __func__, i);
@@ -337,6 +339,10 @@ void get_system_entity()
 
 	memcpy(&(currentConfig->entity), &temp4Config1, sizeof(struct entity_combination));
 }
+
+
+
+
 
 
 /*

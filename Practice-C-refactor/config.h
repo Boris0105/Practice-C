@@ -32,6 +32,8 @@
 #define MAPPING_RULE_NUM 41
 
 #define DEFAULT_CONFIG loadFanzoneConfig0
+#define FAN_MIN 20
+#define FAN_MAX 100
 
 /******************************************************************
  *                         Structures                             *
@@ -136,6 +138,19 @@ struct config {
     //struct powerCappingInfo powerCapping_config;
 };
 
+
+struct PID_settings {
+	int Margin;
+	float kp;
+	float ki;
+	float kd;
+	int T_control;
+	int GB;
+
+};
+
+
+
 /******************************************************************
  *                      Global Variables                          *
  ******************************************************************
@@ -144,6 +159,7 @@ struct config {
 struct config* currentConfig;
 struct FAN_ZONE_MAP FANMAP_output[FAN_ZONE_NUM];
 struct device_map_fanzone device_map_system_fanzone[MAPPING_RULE_NUM];
+struct PID_settings PID;
 
 
  /******************************************************************
@@ -153,5 +169,7 @@ struct device_map_fanzone device_map_system_fanzone[MAPPING_RULE_NUM];
 //?????????????
 void get_system_fanzones();
 void get_system_entity();
+void loadDeviceFanZoneMappingTable();
+void initial_PID_setting();
 //void get_system_power_capping_info();
 #endif

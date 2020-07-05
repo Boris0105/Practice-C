@@ -112,6 +112,16 @@ int loadPowercapConfig0()
     memcpy((void *)&(currentConfig->system_powercapping_settings),
            (void *)&temp_system_power_cap,
            sizeof(struct powercapping));
+		   
+		   
+		   	printf("%d, %d,%d, %d, %d, %d, %d\n",
+		currentConfig->system_powercapping_settings.FanFailcap[0][1],
+		currentConfig->system_powercapping_settings.FanFailcap[1][1],
+		currentConfig->system_powercapping_settings.FanFailcap[2][1],
+		currentConfig->system_powercapping_settings.FanFailcap[3][1],
+		currentConfig->system_powercapping_settings.FanFailcap[4][1],
+		currentConfig->system_powercapping_settings.FanFailcap[5][1],
+		currentConfig->system_powercapping_settings.FanFailcap[6][1]);
 
     return 1;
 
@@ -125,12 +135,13 @@ int checkAndReturnFanzoneConfig0()
 {
     struct entity_combination tempEntity = {
         { 0, 2 },
-        { 5, 16 },
-        { 6, 16 },
-        { 9, 16 },
-        { 10, 16 },
-        { 11, 4 },
-        { 13, 1 }
+		{ 5, 16 },
+		{ 6, 16 },
+		{ 8, 4  },
+		{ 9, 16 },
+		{ 10, 16 },
+		{ 11, 4 },
+		{ 13, 1 }
     };
 
     if (memcmp((void *)&(currentConfig->entity),
@@ -312,6 +323,7 @@ void get_system_entity()
 		{ 0, 2 },
 		{ 5, 16 },
 		{ 6, 16 },
+		{ 8, 4  },
 		{ 9, 16 },
 		{ 10, 16 },
 		{ 11, 4 },
@@ -321,23 +333,24 @@ void get_system_entity()
         	{ 0, 1 },
         	{ 5, 10 },
         	{ 6, 10 },
+		{8,4},
         	{ 9, 10 },
         	{10, 10 },
         	{11, 3 },
         	{13, 1 }
     };
     	struct entity_combination temp4Default = {
-        	{ 1, 2 },
+        	{ 0, 1},
         	{ 3, 4 },
         	{ 5, 6 },
         	{ 7, 8 },
         	{ 9, 10 },
         	{ 11, 12 },
-        	{ 13, 14 },
-        	{ 15, 16 }
+        	{ 11, 3 },
+        	{ 13, 1 }
     };
 
-	memcpy(&(currentConfig->entity), &temp4Config1, sizeof(struct entity_combination));
+	memcpy(&(currentConfig->entity), &temp4Config0, sizeof(struct entity_combination));
 }
 
 void loadDeviceFanZoneMappingTable()
@@ -383,12 +396,25 @@ void loadDeviceFanZoneMappingTable()
 		{ ENTITY_Ambient_Sensor,	DEVICE_INSTANT1,	FAN_INSTANT2,  2, 25 },
 		{ ENTITY_Ambient_Sensor,	DEVICE_INSTANT1,	FAN_INSTANT3,  3, 25 },
 		{ ENTITY_Ambient_Sensor,	DEVICE_INSTANT1,	FAN_INSTANT4,  4, 25 },
-		{ ENTITY_CPU_POWER,	        DEVICE_INSTANT1,	FAN_INSTANT4,  4, 200 }	
+		{ ENTITY_CPU_POWER,	        DEVICE_INSTANT1,	FAN_INSTANT4,  4, 150 }	
 	};
     memcpy(&device_map_system_fanzone, &dmf, sizeof(struct device_map_fanzone) * MAPPING_RULE_NUM);
 }
 
 
+
+void initial_PID_setting()
+{
+	PID.Margin=2;
+	PID.kp=10.14;
+	PID.ki=2;
+	PID.kd=06;
+	PID.T_control=8;
+	PID.GB=1;
+
+};
+
+	
 
 
 /*

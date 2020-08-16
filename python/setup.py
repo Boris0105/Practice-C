@@ -2,7 +2,7 @@ import tkinter as tk
 import math
 
 window = tk.Tk()
-window.title('BMI App')
+window.title('Setup')
 window.geometry('800x600')
 window.configure(background='white')
 

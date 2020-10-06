@@ -1,0 +1,61 @@
+
+#1
+遠端192.168.70.99
+USERID
+pchang10@lenovo.com	
+2Wsx6yhn
+
+
+遠端192.168.70.165
+USERID
+ytsai2@lenovo.com	
+@ul4gzi6
+
+
+
+
+#2
+build server
+userid@192.168.70.80
+PASSW0RD
+
+userid@192.168.70.90
+
+
+#3
+path:
+"platforms/families/highvol/hv_therm_mgr.cpp" 
+void hv_therm_mgr::poll_thermal_devices() 
+
+#4
+build command
+ /mnt/99_Misc/git/system_tools/scripts/imm3_build_2.0.0.sh xcc-whitley-thermal BUILD_IMAGE tdc 
+ 
+
+#5
+wifi PASSWORD:
+CAFE23882899
+
+
+#6
+
+bmc_log mask thermal 0x20
+tail -f /tmp/bmc-info.log 
+ 
+#7
+cd  /home/userid/xcc-whitley-thermal/pkgout-arm/upd/
+ 
+ 
+#8
+tftp -l pl_narvi.1600051226.core.lzop -p 192.168.70.165
+
+
+
+#troble shooting for code_dump
+
+|./bnp/pkgxcc upd nostrip
+|tar --exclude='*dev/*' -cf symbols.tar pkgout-arm/rootfs 
+|gzip symbols.tar
+get the symbol file
+
+ 

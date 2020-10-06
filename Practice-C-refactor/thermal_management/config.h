@@ -11,39 +11,42 @@
  *                            Marcos                              *
  ******************************************************************
  */
-#define ENTITY_PROCESSOR 0
-#define ENTITY_Low_Power_DDR 1
-#define ENTITY_MEMORY_DDR 2
-#define ENTITY_DDR 3
-#define ENTITY_DRIVE_SAS_SATA 4
-#define ENTITY_CPU_POWER_TDP 5
-#define ENTITY_DRIVE_NVME 6
-#define ENTITY_FAN_TYPE_STD 7
-#define ENTITY_FAN_TYPE_PERFORMANCE 8
-#define ENTITY_HDD 9
-#define ENTITY_FAN_COOLING 10
-#define ENTITY_CPU_POWER 11
+#define ENTITY_PROCESSOR_high_Power 0
+#define ENTITY_PROCESSOR 1
+#define ENTITY_PROCESSOR_low_Power 2
+#define ENTITY_Low_Power_DDR 3
+#define ENTITY_MEMORY_DDR 4
+#define ENTITY_High_Power_DDR 5
+#define ENTITY_High_power_BPS 6
+#define ENTITY_DRIVE_SAS_SATA_BACKPLANE 7
+#define ENTITY_DRIVE_ANYBAY_BACKPLANE 8
+#define ENTITY_DRIVE_SAS_SATA 9
+#define ENTITY_DRIVE_NVME 10
+#define ENTITY_FAN_TYPE_STD 11
+#define ENTITY_FAN_TYPE_PERFORMANCE 12
+#define ENTITY_HDD 13
+#define ENTITY_FAN_COOLING 14
+#define ENTITY_CPU_POWER 15
 #define CONFIG_NUM 2
-#define ENTITY_Ambient_Sensor 13
-#define MAPPING_RULE_NUM 127
-#define ENTITY_PCI_TIER1 15
-#define ENTITY_PCI_TIER2 16
-#define ENTITY_PCI_TIER3 17
-#define ENTITY_PCI_TIER4 18
-#define ENTITY_PCI_TIER5 19
-#define ENTITY_PCI_TIER6 20
-#define ENTITY_PCH 21
-#define ENTITY_CPU_VR 22
-#define ENTITY_MEM_VR 23
-#define FAN_ZONE_NUM 1
-#define ENTITY_RAID 25
-#define ENTITY_Mdot2 26
-#define ENTITY_LAN 27
-#define ENTITY_PCI_PLDM 28
-#define ENTITY_GPU 29
-#define CPU_NUM 4
-#define LEN(x) sizeof(x) / sizeof(x[0])
-#define FAN_NUMBER 24
+#define FAN_ZONE_NUM 4
+#define MAPPING_RULE_NUM 47
+#define ENTITY_PCI_TIER1 16
+#define ENTITY_PCI_TIER2 17
+#define ENTITY_PCI_TIER3 18
+#define ENTITY_PCI_TIER4 19
+#define ENTITY_PCI_TIER5 20
+#define ENTITY_PCI_TIER6 21
+#define ENTITY_PCH 22
+#define ENTITY_CPU_VR 23
+#define ENTITY_MEM_VR 24
+#define ENTITY_Ambient_Sensor 27
+#define ENTITY_RAID 28
+#define ENTITY_Mdot2 29
+#define ENTITY_LAN 30
+#define ENTITY_PCI_PLDM 32
+#define CPU_NUM 2
+
+
 
 
 #define DEFAULT_CONFIG loadFanzoneConfig0
@@ -65,14 +68,14 @@ struct device {
 
 /* Fan Instance */
 enum fanInstant {
-	FAN_INSTANT1 = 1,
+	FAN_INSTANT1 = 0,
 	FAN_INSTANT2,
 	FAN_INSTANT3,
 	FAN_INSTANT4,
 	FAN_NUM
 };
 enum deviceInstant {
-	DEVICE_INSTANT1 = 1,
+	DEVICE_INSTANT1 = 0,
 	DEVICE_INSTANT2,
 	DEVICE_INSTANT3,
 	DEVICE_INSTANT4,
@@ -89,55 +92,38 @@ enum deviceInstant {
 	DEVICE_INSTANT15,
 	DEVICE_INSTANT16,
 	DEVICE_INSTANT17,
-	DEVICE_INSTANT18,
-	DEVICE_INSTANT19,
-	DEVICE_INSTANT20,
-	DEVICE_INSTANT21,
-	DEVICE_INSTANT22,
-	DEVICE_INSTANT23,
-	DEVICE_INSTANT24,
-	DEVICE_INSTANT25,
-	DEVICE_INSTANT26,
-	DEVICE_INSTANT27,
-	DEVICE_INSTANT28,
-	DEVICE_INSTANT29,
-	DEVICE_INSTANT30,
-	DEVICE_INSTANT31,
-	DEVICE_INSTANT32,
-	DEVICE_INSTANT33,
-	DEVICE_INSTANT34,
-	DEVICE_INSTANT35,
-	DEVICE_INSTANT36,
-	DEVICE_INSTANT37,
-	DEVICE_INSTANT38,
-	DEVICE_INSTANT39,
-	DEVICE_INSTANT40,
-	DEVICE_INSTANT41,
-	DEVICE_INSTANT42,
-	DEVICE_INSTANT43,
-	DEVICE_INSTANT44,
-	DEVICE_INSTANT45,
-	DEVICE_INSTANT46,
-	DEVICE_INSTANT47,
-	DEVICE_INSTANT48,
-	DEVICE_INSTANT49,
-	DEVICE_INSTANT50,
-	DEVICE_INSTANT51,
-	DEVICE_INSTANT52,
 	DEVICE_NUM
 };
 
 
-/*
+
 struct device_map_fanzone {
 	short type;
-	enum deviceInstant device;
+	enum deviceInstant device;;
 	enum fanInstant instant;
 	int power_sensor_value;
 	int TEMP;
 	
 };
-*/
+
+
+
+
+struct entity_combination {
+	struct device CPU;
+	struct device memory_DDR;
+	struct device memory_BPS;
+	struct device drive_type;
+	struct device backplane_STD;
+	struct device backplane_NVME;
+	struct device fan_type;
+	struct device AMB;
+	struct device PCI_type;
+};
+
+
+
+//========================================
 
 
 
@@ -148,41 +134,32 @@ struct fanzone {
 
 
 
-struct device_map_fanzone {
-	short 	type;
-	enum 	deviceInstant device;
-	float 	value;
-	int   	presence;	
-	float   fanduty_output_Openloop;
-	float   fanduty_output_Low_POWER_POWERBAND;
-	float	fanduty_output_PID_CONTROLLER;
-	float   MAX_fanduty_output;
-	int 	fanzone_numbers;
-		
+/*
+struct EXPECT_FAN_PWM[FAN_ZONE_NUM]{
+	float PWM;
 };
+*/
+
+/*
+struct FAN_ZONE_MAP{
+	struct EXPECT_FAN_PWM openloop;
+	struct EXPECT_FAN_PWM CPU_PID;
+	struct EXPECT_FAN_PWM SENSOR_Threshold;
+	struct EXPECT_FAN_PWM pcie_tier;
+	struct EXPECT_FAN_PWM MAX_output;
 
 
-
-
-
-struct entity_combination {
-	struct device CPU;
-	struct device memory_DDR;
-	struct device drive_type;
-	struct device fan_type;
-	struct device RAID;
-	
 };
+*/
 
-
-
-
-
-struct different_fan_type_OUTPUT {
-	float STD_fan_zone_settings[6][8];
-	float HP_fan_zone_settings[6][8];
+struct FAN_ZONE_MAP {
+	float openloop;
+	float CPU_PID;
+	float CPU_PID1;
+	float SENSOR_Threshold;
+	float pcie_tier;
+	float Max_output;
 };
-
 
 
 
@@ -195,9 +172,9 @@ struct powercapping{
 struct config {
 	struct entity_combination entity;
 	struct fanzone fanzones[FAN_ZONE_NUM];
-	//struct fanzone fanzones;
 	struct powercapping system_powercapping_settings;
-	
+	// [WIP] see get_system_power_capping_info in config.c
+    //struct powerCappingInfo powerCapping_config;
 };
 
 
@@ -211,7 +188,21 @@ struct PID_settings {
 
 };
 
+struct Tier {
+	
+	float tier_vs_AMB_std[7][8];
+	float tier_vs_AMB_hp[7][8];
+};
 
+
+
+
+//struct PWM_output {
+	
+	
+	//float system_output[4][6];
+	
+//};
 
 	
 	
@@ -223,11 +214,12 @@ struct PID_settings {
  */
  
 struct config* currentConfig;
+struct FAN_ZONE_MAP FANMAP_output[FAN_ZONE_NUM];
 struct device_map_fanzone device_map_system_fanzone[MAPPING_RULE_NUM];
 struct PID_settings PID[CPU_NUM];
 //struct PID_settings PID_1;
+struct Tier Temp_TIER_SETTINGS;
 float overall_PWM_output[4][6];
-float FAN_OUTPUT[FAN_NUMBER][2];
  /******************************************************************
   *                           Functinos                            *
   ******************************************************************
@@ -237,18 +229,6 @@ void get_system_fanzones();
 void get_system_entity();
 void loadDeviceFanZoneMappingTable();
 void initial_PID_setting();
-void INIT_THEMRAL_DATA_BASE();
-//void SYSTEM_BASE_OPENLOOP();
-//void LOW_POWER_BAND();
-//void PID_CONTROLLER();
-//void CHECK_FAN_MAP();
-//float PICK_UP_MAX_FANDUTY();
-
-
-
-
-
-
 
 void initial_tier_settings();
 //void initial_overall_PWM_output();

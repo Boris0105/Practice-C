@@ -15,21 +15,13 @@ int fan_map_output_PID(int ENTITY,int instance,float fanduty);
 
 	
 float get_CPU_Power_Ratio(int FANZONE_ID);
-float PICK_UP_MAX_FANDUTY(int i);
 
 
-void SYSTEM_BASE_OPENLOOP();
-void CHECK_FAN_MAP();
-void PID_CONTROLLER();
-void LOW_POWER_BAND();
-
-
-
-
-
-
-
-
+void* openloop(void*args);
+void* CPU_PID(void*args);
+void* CPU_PID1(void*args);
+void* pcie_tier(void*args);
+void* funcFanMap(void*args);
 
 
 #endif

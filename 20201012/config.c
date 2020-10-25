@@ -1,10 +1,14 @@
-#include "config.h"
+#include "predefine.h"
+
+
+int fanzone_map_fan[FAN_NUMBER] =
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
 int loadFanzoneConfig0()
 {
 	printf("loadFanzoneConfig0\n");
-	struct fanzone tempFanzones = {
-		
+	struct fanzone tempFanzones[FAN_ZONE_NUM] = {
+		{
 			{
 				{0,21,22,23,24,25,26,27},
 				{0.2,20,21,22,23,24,25,26},
@@ -21,7 +25,7 @@ int loadFanzoneConfig0()
 				{0.8,30,31,32,33,34,35,36},
 				{1,30,31,32,33,34,35,36}
 			}
-
+		},
 	};
 	
 	
@@ -33,7 +37,6 @@ int loadFanzoneConfig0()
 	printf("complete to load openloop table\n");
     return 1;
 }
-
 
 
 
@@ -82,14 +85,15 @@ int loadPowercapConfig0()
 
 
 
+
 int checkAndReturnFanzoneConfig0()
 {
     struct entity_combination tempEntity = {
     { 0, 4  },
-	{ 3, 48 },
+	{ 2, 48 },
 	{ 4, 48 },
-	{ 7, 24 },
-	{ 25, 4 },
+	{ 8, 24 },
+	{ 25, 6 },
     };
 
 
@@ -219,31 +223,31 @@ void get_system_entity()
 	// [WIP] entity shall be retrieved at system startup,
 	// use a temporary entity here. This shall be removed later.
     	struct entity_combination temp4Config0 = {
-		{ 0, 4   },
-		{ 3, 48  },
-		{ 4, 48  },
-		{ 7, 24  },
-		{ 25, 4  },
+		{ ENTITY_PROCESSOR, 4   },
+		{ ENTITY_MEMORY_DDR, 48  },
+		{ ENTITY_DRIVE_SAS_SATA, 48  },
+		{ ENTITY_FAN_TYPE_PERFORMANCE, 24  },
+		{ ENTITY_RAID, 6  },
 		};
     
     	struct entity_combination temp4Config1 = {
-		{ 0, 3 },
-		{ 3, 48 },
-		{ 4, 48 },
-		{ 7, 24  },
-		{ 25, 4},
+		{ ENTITY_PROCESSOR, 3 },
+		{ ENTITY_MEMORY_DDR, 48 },
+		{ ENTITY_DRIVE_SAS_SATA, 48 },
+		{ ENTITY_FAN_TYPE_PERFORMANCE, 24  },
+		{ ENTITY_RAID, 4},
 		};
     
     	struct entity_combination temp4Default = {
-		{ 0, 4 },
-		{ 3, 48 },
-		{ 4, 48 },
-		{ 7, 24 },
-		{ 25, 3},
+		{ ENTITY_PROCESSOR, 4 },
+		{ ENTITY_MEMORY_DDR, 40 },
+		{ ENTITY_DRIVE_SAS_SATA, 28 },
+		{ ENTITY_FAN_TYPE_PERFORMANCE, 24 },
+		{ ENTITY_RAID, 3},
 		};
 
 	memcpy(&(currentConfig->entity), &temp4Config0, sizeof(struct entity_combination));
-}
+};
 
 
 
@@ -279,6 +283,7 @@ void initial_PID_setting()
 	PID[3].GB=1;
 	
 
+
 };
 
 
@@ -291,6 +296,7 @@ void initial_tier_settings()
 					{
 					{21,25,28,30,34,38,41,45},
 					{1,20,21,22,23,24,25,26},
+					{2,25,26,27,28,29,30,31},
 					{2,25,26,27,28,29,30,31},
 					{3,30,31,32,33,34,35,36},
 					{4,35,36,37,38,39,40,41},
